@@ -1,18 +1,17 @@
-Aileron/rudder/elevator/throttle/wheel/flaps mixer for PX4FMU
-=======================================================
+Dual Aileron/rudder/elevator/throttle + 3 AUX mixer for DFOP
+============================================================
 
 This file defines mixers suitable for controlling a fixed wing aircraft with
-aileron, rudder, elevator, throttle and steerable wheel controls using PX4FMU.
+aileron, rudder, elevator and throttle using PX4FMU.
 The configuration assumes the aileron servo(s) are connected to PX4FMU servo
 output 0 and 1, the elevator to output 2, the rudder to output 3, the throttle
 to output 4 and the wheel to output 5.
 
 Inputs to the mixer come from channel group 0 (vehicle attitude), channels 0
-(roll), 1 (pitch), 2 (yaw) and 3 (thrust) 4 (flaps).
+(roll), 1 (pitch), 2 (yaw) and 3 (thrust).
 
-Aileron mixer (roll + flaperon)
+CH1 and CH2: Aileron mixer (roll)
 ---------------------------------
-
 This mixer assumes that the aileron servos are set up correctly mechanically;
 depending on the actual configuration it may be necessary to reverse the scaling
 factors (to reverse the servo movement) and adjust the offset, scaling and
@@ -26,8 +25,8 @@ M: 1
 O:      10000  10000      0 -10000  10000
 S: 0 0  10000  10000      0 -10000  10000
 
-Elevator mixer
-------------
+CH3: Elevator mixer
+-------------------
 Two scalers total (output, roll).
 
 This mixer assumes that the elevator servo is set up correctly mechanically;
@@ -39,8 +38,8 @@ M: 1
 O:       10000   10000      0 -10000  10000
 S: 0 1  -10000  -10000      0 -10000  10000
 
-Rudder mixer
-------------
+CH4: Rudder mixer
+-----------------
 Two scalers total (output, yaw).
 
 This mixer assumes that the rudder servo is set up correctly mechanically;
@@ -52,8 +51,8 @@ M: 1
 O:      10000  10000      0 -10000  10000
 S: 0 2  10000  10000      0 -10000  10000
 
-Motor speed mixer
------------------
+CH5: Motor speed mixer
+----------------------
 Two scalers total (output, thrust).
 
 This mixer generates a full-range output (-1 to 1) from an input in the (0 - 1)
@@ -62,4 +61,28 @@ range.  Inputs below zero are treated as zero.
 M: 1
 O:      10000  10000      0 -10000  10000
 S: 0 3      0  20000 -10000 -10000  10000
+
+AUX1: Raido power mixer
+-----------------------
+This mixer generates a half-range output (0 to 1) from an input in the (0 - 1)
+range.  Inputs below zero are treated as 0
+
+M: 1
+O:      10000  10000      0      0  10000
+
+AUX2: Parachute Mixer
+---------------------
+This mixer generates a half-range output (0 to 1) from an input in the (0 - 1)
+range.  Inputs below zero are treated as 0
+
+M: 1
+O:      10000  10000      0      0  10000
+
+AUX3: Extra Mixer
+-----------------
+This mixer generates a half-range output (0 to 1) from an input in the (0 - 1)
+range.  Inputs below zero are treated as 0
+
+M: 1
+O:      10000  10000      0      0  10000
 
